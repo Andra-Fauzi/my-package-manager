@@ -2,10 +2,12 @@ use clap::{Parser, Subcommand};
 
 use std::{io, path::Path};
 
-use crate::package::convert_zip_to_byte;
+use crate::{manifest::read_manifest_package, package::{convert_zip_to_byte, convert_zip_to_hash}};
 
 mod network;
 mod package;
+mod manager;
+mod manifest;
 
 #[derive(Parser)]
 #[command(version, about, long_about = None)]
@@ -44,24 +46,40 @@ fn main() {
     // }
 
 
-    let mut input = String::new();
-    io::stdin().read_line(&mut input).expect("cannot read line");
+    // let mut input = String::new();
+    // io::stdin().read_line(&mut input).expect("cannot read line");
 
-    println!("{}",input);
+    // println!("{}",input);
 
-    if input.contains("client") {
-        println!("on client");
-        let client = network::client();
-        if let Err(e) = client {
-            println!("error on server, {}", e);
-        }
+    // if input.contains("client") {
+    //     println!("on client");
+    //     let client = network::client();
+    //     if let Err(e) = client {
+    //         println!("error on server, {}", e);
+    //     }
+    // }
+    // else {
+    //     println!("on server");
+    //     let data = vec![255; 102400];
+    //     let server = network::server(data);
+    //     if let Err(e) = server {
+    //         println!("error on server, {}", e);
+    //     }
+    // }
+
+    // convert_zip_to_hash();
+
+    // manifest::test();
+
+    let result = read_manifest_package(Path::new("packages/script-linux"));
+
+    println!("Manifest : {:#?}\n Lock : {:#?}", result.0, result.1);
+
+    let lock = result.1;
+
+    if let Some(val) = lock.dependecies {
+
+        println!("contoh: {}", val["panjang"]);
     }
-    else {
-        println!("on server");
-        let data = convert_zip_to_byte(Path::new("archive.zip"));
-        let server = network::server(data);
-        if let Err(e) = server {
-            println!("error on server, {}", e);
-        }
-    }
+
 }

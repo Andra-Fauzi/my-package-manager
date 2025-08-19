@@ -5,4 +5,7 @@ edition = "2024"
 
 [dependencies]
 clap = { version = "4.5.42", features = ["derive"] }
+serde = { version = "1.0.219", features = ["derive"] }
+serde_json = "1.0.142"
+sha2 = "0.10.9"
 zip = "4.3.0"

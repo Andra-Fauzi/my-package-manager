@@ -1,6 +1,8 @@
-use std::{fs::File,io::{Read, Seek, Write}, path::{self, Path}};
+use std::{fs::File, hash::Hash, io::{Read, Seek, Write}, path::{self, Path}};
 
 use zip::{write::{FileOptions, ZipWriter}, ZipArchive};
+
+use sha2::{Sha256, Digest};
 
 pub fn write_zip() -> zip::result::ZipResult<()> {
     let file = File::create("archive.zip")?;
@@ -39,4 +41,12 @@ pub fn convert_zip_to_byte(path: &Path) -> Vec<u8>{
 pub fn convert_byte_to_zip(data: Vec<u8>) {
     let mut some_file = File::create("halo.zip").unwrap();
     some_file.write_all(&data);
+}
+
+pub fn convert_zip_to_hash() -> String {
+    let mut hasher = Sha256::new();
+    hasher.update(b"halo world");
+    let result = hasher.finalize();
+    let hash = format!("{:x}", result);
+    return hash;
 }
