@@ -1,0 +1,10 @@
+{
+    "name" : "script-linux",
+    "version" : 1.0,
+    "source" : "packages/script-linux",
+    "checksum" : "lkskuariuwru4h",
+    "dependecies" : {
+        "panjang" : 2.0,
+        "pendek" : 4.0
+    }
+}
