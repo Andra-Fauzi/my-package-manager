@@ -1,38 +1,12 @@
-use clap::{Parser, Subcommand};
 
 use std::{io, path::Path};
 
-use crate::{manifest::read_manifest_package, package::{convert_zip_to_byte, convert_zip_to_hash}};
+use crate::{manifest::{create_manifest_package, read_manifest_package}, package::{convert_zip_to_byte, convert_zip_to_hash}};
 
 mod network;
 mod package;
 mod manager;
 mod manifest;
-
-#[derive(Parser)]
-#[command(version, about, long_about = None)]
-struct Args {
-    #[command(subcommand)]
-    command: Command,
-}
-
-#[derive(Subcommand)]
-enum Command {
-    Install {
-        name: String,
-    },
-    Uninstall {
-        name: String,
-    },
-    Search {
-        name: String,
-    },
-    About,
-    Url {
-        url: String
-    },
-    Show
-}
 
 fn main() {
     // let args = Args::parse();
@@ -71,15 +45,10 @@ fn main() {
 
     // manifest::test();
 
-    let result = read_manifest_package(Path::new("packages/script-linux"));
+    // let result = read_manifest_package(Path::new("packages/script-linux"));
 
-    println!("Manifest : {:#?}\n Lock : {:#?}", result.0, result.1);
+    // create_manifest_package(Path::new("."), &result.0, &result.1);
 
-    let lock = result.1;
-
-    if let Some(val) = lock.dependecies {
-
-        println!("contoh: {}", val["panjang"]);
-    }
+    manager::start();
 
 }

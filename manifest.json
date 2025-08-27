@@ -1,4 +1,9 @@
 {
-  "nama": "halo",
-  "umur": 123
+  "name": "andra",
+  "version": 0.1,
+  "dependencies": {
+    "halo": 1.0,
+    "sigma": 1.0,
+    "ohio": 1.0
+  }
 }
